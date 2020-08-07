@@ -48,6 +48,8 @@ export {
   ValidateOptions
 } from "./lib/validators/liveValidator"
 export { SpecResolver } from "./lib/validators/specResolver"
+export { ModelValidator } from "./lib/validators/modelValidator"
+export { SemanticValidator } from "./lib/validators/semanticValidator"
 
 // Constants
 export const Constants = C
