@@ -89,7 +89,7 @@ export class ValidateResponse {
     if (!warnings) {
       throw new Error("validationError cannot be null or undefined.")
     }
-    return warnings;
+    return warnings
   }
 }
 
