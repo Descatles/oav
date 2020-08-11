@@ -90,9 +90,7 @@ export class ValidateResponse {
       throw new Error("validationError cannot be null or undefined.")
     }
     return warnings.filter(
-      warning =>
-        warning.code &&
-        warning.code !== "EXTRA_REFERENCE_PROPERTIES"
+      warning => warning.code && warning.code !== "EXTRA_REFERENCE_PROPERTIES"
     )
   }
 }
