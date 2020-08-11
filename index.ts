@@ -50,6 +50,7 @@ export {
 export { SpecResolver } from "./lib/validators/specResolver"
 export { ModelValidator } from "./lib/validators/modelValidator"
 export { SemanticValidator } from "./lib/validators/semanticValidator"
+export { CommonError } from "./lib/util/commonError"
 
 // Constants
 export const Constants = C
