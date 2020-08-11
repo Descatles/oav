@@ -92,8 +92,7 @@ export class ValidateResponse {
     return warnings.filter(
       warning =>
         warning.code &&
-        warning.code !== "EXTRA_REFERENCE_PROPERTIES" &&
-        warning.code !== "UNUSED_DEFINITION"
+        warning.code !== "EXTRA_REFERENCE_PROPERTIES"
     )
   }
 }
