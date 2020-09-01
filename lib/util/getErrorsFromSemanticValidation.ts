@@ -26,22 +26,34 @@ export const getErrorsFromSemanticValidation = (
   if (!validationResult.validateSpec || !validationResult.validateSpec.errors) {
     return []
   }
+  let curSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(x => Object.assign({}, x));
+  let newSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(x => Object.assign({}, x));
+  do {
+    curSemanticError = newSemanticError;
+    newSemanticError =  curSemanticError.reduce((acc, rawError) => {
+      const serializedErrors: any[] = serializeErrors(rawError.inner || rawError, [])
 
-  return validationResult.validateSpec.errors.reduce((acc, rawError) => {
-    const serializedErrors: any[] = serializeErrors(rawError.inner || rawError, [])
+      // process serialized errors
+      const semanticErrors: SemanticValidationError[] = serializedErrors.map(serializedError => {
+        const severity = errorCodeToErrorMetadata(serializedError.code).severity
+        const semanticError: SemanticValidationError = {
+          source: ValidationResultSource.GLOBAL,
+          code: serializedError.code,
+          details: serializedError,
+          path: rawError["json-path"],
+          severity
+        }
+        return semanticError
+      })
+      return [...acc, ...semanticErrors]
+    }, new Array<SemanticValidationError>())
 
-    // process serialized errors
-    const semanticErrors: SemanticValidationError[] = serializedErrors.map(serializedError => {
-      const severity = errorCodeToErrorMetadata(serializedError.code).severity
-      const semanticError: SemanticValidationError = {
-        source: ValidationResultSource.GLOBAL,
-        code: serializedError.code,
-        details: serializedError,
-        path: rawError["json-path"],
-        severity
-      }
-      return semanticError
-    })
-    return [...acc, ...semanticErrors]
-  }, new Array<SemanticValidationError>())
+  } while (curSemanticError.length !== newSemanticError.length)
+
+  const semanticError = curSemanticError.filter(it => 
+    it.code !== "ANY_OF_MISSING" 
+    && it.code !== "ONE_OF_MISSING" 
+    && it.code !== "ONR_OF_MULTIPLE");
+
+  return semanticError;
 }
