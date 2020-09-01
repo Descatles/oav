@@ -26,15 +26,15 @@ export const getErrorsFromSemanticValidation = (
   if (!validationResult.validateSpec || !validationResult.validateSpec.errors) {
     return []
   }
-  let curSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(
-    x => Object.assign({}, x)
-  );
-  let newSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(
-    x => Object.assign({}, x)
-  );
+  let curSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(x => 
+    Object.assign({}, x)
+  )
+  let newSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(x => 
+    Object.assign({}, x)
+  )
   do {
-    curSemanticError = newSemanticError;
-    newSemanticError =  curSemanticError.reduce((acc, rawError) => {
+    curSemanticError = newSemanticError
+    newSemanticError = curSemanticError.reduce((acc, rawError) => {
       const serializedErrors: any[] = serializeErrors(rawError.inner || rawError, [])
       // process serialized errors
       const semanticErrors: SemanticValidationError[] = serializedErrors.map(serializedError => {
@@ -52,6 +52,6 @@ export const getErrorsFromSemanticValidation = (
     }, new Array<SemanticValidationError>())
   } while (curSemanticError.length !== newSemanticError.length)
   return curSemanticError.filter(
-    it => 
+    it =>
       it.code !== "ANY_OF_MISSING" && it.code !== "ONE_OF_MISSING" && it.code !== "ONR_OF_MULTIPLE");
 }
