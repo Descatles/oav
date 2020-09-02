@@ -26,11 +26,11 @@ export const getErrorsFromSemanticValidation = (
   if (!validationResult.validateSpec || !validationResult.validateSpec.errors) {
     return []
   }
-  let curSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(x => { 
-    return {...x} 
+  let curSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(x => {
+    return {...x }
   })
-  let newSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(x => { 
-    return {...x} 
+  let newSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(x => {
+    return {...x }
   })
   do {
     curSemanticError = newSemanticError
