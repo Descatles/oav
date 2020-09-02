@@ -26,12 +26,12 @@ export const getErrorsFromSemanticValidation = (
   if (!validationResult.validateSpec || !validationResult.validateSpec.errors) {
     return []
   }
-  let curSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(x =>
-    { return {...x} }
-  )
-  let newSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(x =>
-    { return {...x} }
-  )
+  let curSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(x => { 
+    return {...x} 
+  })
+  let newSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(x => { 
+    return {...x} 
+  })
   do {
     curSemanticError = newSemanticError
     newSemanticError = curSemanticError.reduce((acc, rawError) => {
@@ -54,5 +54,5 @@ export const getErrorsFromSemanticValidation = (
   return curSemanticError.filter(
     it =>
       it.code !== "ANY_OF_MISSING" && it.code !== "ONE_OF_MISSING" && it.code !== "ONR_OF_MULTIPLE"
-  );
+  )
 }
