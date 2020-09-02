@@ -27,10 +27,10 @@ export const getErrorsFromSemanticValidation = (
     return []
   }
   let curSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(x => {
-    return {...x }
+    return { ...x }
   })
   let newSemanticError: SemanticValidationError[] = validationResult.validateSpec.errors.map(x => {
-    return {...x }
+    return { ...x }
   })
   do {
     curSemanticError = newSemanticError
